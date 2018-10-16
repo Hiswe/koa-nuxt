@@ -1,12 +1,12 @@
 <script>
 export default {
-  name: `page-index`,
+  name: `layout-error`,
 }
 </script>
 
 <template>
-<div class="home">
-  hello world
-</div>
+  <kn-main>
+    <nuxt />
+  </kn-main>
 </template>
 

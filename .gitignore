@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 .rpt2_cache
 dist
+build
+.nuxt
 
 # Runtime data
 pids

@@ -2,6 +2,7 @@ import Koa from 'koa'
 import Router from 'koa-router'
 import consola from 'consola'
 import { Nuxt, Builder } from 'nuxt'
+import util from 'util'
 
 import nuxtConfig from '../nuxt.config.js'
 import koaNuxt from '../../dist'
@@ -30,7 +31,7 @@ async function start() {
 
   // Build in development
   if (nuxtConfig.dev) {
-    console.log(chalk.yellow(`SPA build for dev`))
+    appLogger.info(`SPA build for dev`)
     const builder = new Builder(nuxt)
     await builder.build()
   }
@@ -103,10 +104,8 @@ async function start() {
 
   app.listen(PORT, HOST, function koaInitEnd() {
     appLogger.start(
-      `server is listening on`,
-      chalk.cyan(`${HOST}:${PORT}`),
-      `on mode`,
-      chalk.cyan(config.NODE_ENV)
+      `server is listening at ${HOST}:${PORT}`,
+      `on mode ${app.env}`
     )
   })
 }

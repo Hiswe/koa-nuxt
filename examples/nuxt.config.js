@@ -4,6 +4,8 @@ export default {
   router: {
     middleware: [`handle-server-errors`],
   },
+  plugins: [`@/plugins/register-global-components.js`],
+  css: [`@/assets/global-style.css`],
   head: {
     titleTemplate: `Koa Nuxt – %s`,
     meta: [
