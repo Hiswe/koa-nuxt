@@ -1,5 +1,8 @@
 import consola from 'consola'
 
+// follow create-nuxt-app example
+// https://github.com/nuxt/create-nuxt-app/blob/master/template/server/index-koa.js
+
 import { KoaMiddleware, Nuxt, KoaContext } from './types'
 
 const nuxtLogger = consola.withScope(`koa-nuxt`)
@@ -21,7 +24,6 @@ export default function createKoaMiddleware(nuxt: Nuxt): KoaMiddleware {
         nuxtLogger.debug(`finish`, ctx.originalUrl)
         resolve()
       })
-      // ctx.res.on('finish', resolve)
 
       nuxt.render(ctx.req, ctx.res, function nuxtRenderCallback(renderPromise) {
         nuxtLogger.debug(`render`, ctx.originalUrl)
