@@ -1,0 +1,13 @@
+.nyc_output
+.rpt2_cache
+.vscode
+coverage
+src
+test
+.gitignore
+.prettierrc.js
+.travis.yml
+ava.config.js
+package-lock.json
+rollup.config.js
+tsconfig.json
