@@ -27,19 +27,22 @@ app.keys = [
 nuxtConfig.dev = !(app.env === 'production')
 
 async function start() {
-  // const savedState = {}
-
   //////
   // SERVER CONFIG
   //////
 
   app.use(logger())
 
-  // Don't use sessions
-  // • we will need Koa 3 to not have ERR_HTTP_HEADERS_SENT errors
-  // • https://github.com/koajs/koa/issues/1008
-
-  app.use(session({ key: `kn-example` }, app))
+  const SESSIONS_CONFIG = {
+    key: `kn-example`,
+    // don't autoCommit
+    // • it will be done after Nuxt render
+    // … but Nuxt will already have send the response
+    // … so session won't be modified
+    // • https://github.com/koajs/session/issues/89
+    autoCommit: false,
+  }
+  app.use(session(SESSIONS_CONFIG, app))
 
   //----- NUXT HANDLING
 
@@ -54,7 +57,7 @@ async function start() {
 
   const renderNuxt = koaNuxt(nuxt)
 
-  //----- XHR
+  //----- XHR GUESSING
 
   app.use(async (ctx, next) => {
     ctx.state.isJson = ctx.request.type === `application/json`
@@ -76,6 +79,7 @@ async function start() {
       })
       ctx.status = boomError.output.statusCode
       // expose error to nuxt
+      // • used by middleware/handle-server-errors
       ctx.req.error = boomError
       try {
         errorLogger.error(`serving nuxt response`)
@@ -107,6 +111,9 @@ async function start() {
         type: `info`,
       },
     }
+    // persist session with `manuallyCommit`
+    // • https://github.com/koajs/session#sessionmanuallycommit
+    await ctx.session.manuallyCommit()
     ctx.redirect(`/info`)
   })
   router.post(`/will-throw`, async ctx => {
@@ -123,28 +130,17 @@ async function start() {
   //////
 
   app.use(async (ctx, next) => {
-    const string = ctx.cookies.get(`kn-example`, { signed: true })
-    // dirty fix for emptying flash messages
-    // delete ctx.session.notification
-    if (string) {
-      const body = new Buffer.from(string, 'base64').toString('utf8')
-      let json
-      try {
-        json = JSON.parse(body)
-      } catch (parseError) {
-        json = {}
-      }
-      delete json.notification
-      const cookieBody = JSON.stringify(json)
-      const encodedCookieBody = new Buffer.from(cookieBody).toString('base64')
-      ctx.cookies.set(`kn-example`, encodedCookieBody, { signed: true })
-    }
-
-    // useful for nuxtServerInit
+    // useful for Vuex nuxtServerInit
     ctx.req.serverData = {
       ...ctx.session,
     }
-
+    // remove flash message
+    delete ctx.session.notification
+    // persist session with `manuallyCommit`
+    // • this prevent writing headers after Nuxt response
+    // • https://github.com/koajs/session#sessionmanuallycommit
+    await ctx.session.manuallyCommit()
+    // can render with Nuxt
     await next()
   })
 
