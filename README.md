@@ -26,14 +26,13 @@ In order to use [koa-session](https://github.com/koajs/session) without having `
 
 ```js
 const sessionConfig = {
-  key: `kn-example`,
   // don't autoCommit because we need to control when headers are send
   autoCommit: false,
 }
 app.use(session(sessionConfig, app))
 
 app.use(async (ctx, next) => {
-  ctx.sessions.now = new Date().valueOf()
+  ctx.session.now = new Date().valueOf()
   // ensure headers are sent before nuxt
   await ctx.session.manuallyCommit()
   // nuxt render can be safely be done after that
@@ -51,9 +50,6 @@ import koaNuxt from '@hiswe/koa-nuxt'
 import nuxtConfig from '../nuxt.config.js'
 
 const app = new Koa()
-const HOST = process.env.HOST || `127.0.0.1`
-const PORT = process.env.PORT || 3000
-
 nuxtConfig.dev = !(app.env === `production`)
 
 async function start() {
@@ -68,17 +64,14 @@ async function start() {
     await builder.build()
   }
 
-  //----- NUXT
-
-  // it will take care of anything handled by nuxt
+  // call the middleware in last position
+  // it will take care of anything not handled by our app
   app.use(renderNuxt)
 
-  //----- LAUNCHING
-
-  app.listen(PORT, HOST, () => {
-    console.log(`server is listening at ${HOST}:${PORT}`)
-  })
+  // launch app
+  app.listen(process.env.HOST || `127.0.0.1`, process.env.PORT || 3000)
 }
+
 start()
 ```
 
@@ -89,7 +82,7 @@ got see `example` folder
 - full no-JS support
 - flash messages with koa-session
 - handle almost all server-errors with nuxt
-  only case where it can fail is if Nuxt fail to render aa server error…
+  can fail if Nuxt fail to render a server error…
 
 to launch after cloning the projet:
 
