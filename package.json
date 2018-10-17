@@ -1,5 +1,5 @@
 {
-  "name": "@hiswe/koa-next",
+  "name": "@hiswe/koa-nuxt",
   "version": "0.0.1",
   "description": "koa middleware for nuxt",
   "keywords": [
