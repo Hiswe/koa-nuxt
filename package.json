@@ -2,6 +2,11 @@
   "name": "@hiswe/koa-next",
   "version": "0.0.1",
   "description": "koa middleware for nuxt",
+  "keywords": [
+    "koa",
+    "middleware",
+    "nuxt"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/Hiswe/koa-nuxt.git",
