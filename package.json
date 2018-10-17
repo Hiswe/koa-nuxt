@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "del dist && rollup --config",
+    "release": "npm run build && np --no-cleanup",
     "toc": "doctoc README.md --github"
   },
   "dependencies": {
