@@ -16,8 +16,7 @@
     "toc": "doctoc README.md --github"
   },
   "dependencies": {
-    "@types/node": "^10.12.0",
-    "consola": "^1.4.4"
+    "@types/node": "^10.12.0"
   },
   "devDependencies": {
     "del-cli": "^1.1.0",
