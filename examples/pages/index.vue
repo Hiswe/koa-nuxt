@@ -5,8 +5,8 @@ export default {
 </script>
 
 <template>
-<div class="home">
-  hello world
-</div>
+  <div class="home">
+    hello world
+  </div>
 </template>
 
