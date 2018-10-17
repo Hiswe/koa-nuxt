@@ -5,8 +5,15 @@ export default {
 </script>
 
 <template>
-  <div class="home">
-    hello world
+  <div class="kn-home">
+    KOA 💚 Nuxt
   </div>
 </template>
 
+<style scoped>
+.kn-home {
+  font-size: 3rem;
+  text-align: center;
+  color: var(--color-vue);
+}
+</style>

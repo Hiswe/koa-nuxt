@@ -21,6 +21,17 @@ body {
   margin: 0;
 }
 
-body.client-side-only {
-  background: var(--color-vue-light);
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: currentColor;
+  text-decoration-color: var(--c-accent);
+}
+a:hover {
+  color: var(--c-accent);
 }

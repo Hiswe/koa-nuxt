@@ -11,6 +11,8 @@ import session from 'koa-session'
 import nuxtConfig from '../nuxt.config.js'
 import koaNuxt from '../../dist'
 
+consola.level = 100
+
 const appLogger = consola.withScope(`APP`)
 const errorLogger = consola.withScope(`ERROR`)
 

@@ -12,7 +12,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "del dist && rollup --config"
+    "build": "del dist && rollup --config",
+    "toc": "doctoc README.md --github"
   },
   "dependencies": {
     "@types/node": "^10.12.0",
