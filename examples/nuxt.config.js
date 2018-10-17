@@ -18,5 +18,14 @@ export default {
       { hid: `author`, name: `author`, content: pkg.author },
       { hid: `description`, name: `description`, content: pkg.description },
     ],
+    noscript: [
+      {
+        innerHTML: `
+        <p class="no-script-message">
+          Javascript is disabled but no worries everything should be fine
+        </p>`,
+      },
+    ],
+    __dangerouslyDisableSanitizers: ['noscript'],
   },
 }
