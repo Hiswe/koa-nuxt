@@ -2,13 +2,20 @@ export const state = () => ({
   notifications: [],
 })
 
-const ADD_NOTIFICATION = `ADD_NOTIFICATION`
+export const ADD_NOTIFICATION = `ADD_NOTIFICATION`
+export const REMOVE_NOTIFICATION = `REMOVE_NOTIFICATION`
 
 export const mutations = {
   [ADD_NOTIFICATION](state, payload) {
     state.notifications.push({
       ...payload,
     })
+  },
+  [REMOVE_NOTIFICATION](state, id) {
+    const notificationIndex = state.notifications.findIndex(
+      notification => notification.id === id,
+    )
+    state.notifications.splice(notificationIndex, 1)
   },
 }
 

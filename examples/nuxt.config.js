@@ -4,13 +4,11 @@ export default {
   router: {
     middleware: [`handle-server-errors`],
   },
+  modules: [`@nuxtjs/axios`],
   plugins: [`@/plugins/register-global-components.js`],
   css: [`@/assets/global-style.css`],
-  // https://medium.com/nuxt/nuxt-2-is-coming-oh-yeah-212c1a9e1a67#af5f
-  build: {
-    // cache: true,
-    // parallel: true,
-  },
+  build: {},
+  axios: {},
   head: {
     titleTemplate: `Koa Nuxt – %s`,
     meta: [

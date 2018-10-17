@@ -1,4 +1,7 @@
 <script>
+import { mapMutations } from 'vuex'
+import { REMOVE_NOTIFICATION } from '~/store'
+
 const REMOVE_DELAY = 6600
 
 export default {
@@ -26,11 +29,14 @@ export default {
     )
   },
   methods: {
-    removeNotification(notificationId) {
+    removeNotification() {
       window.clearTimeout(this.timerId)
       this.timerId = false
-      this.$store.commit(`notification/REMOVE`, this.message.id)
+      this.removeNotification(this.notification.id)
     },
+    ...mapMutations({
+      removeNotification: REMOVE_NOTIFICATION,
+    }),
   },
 }
 </script>

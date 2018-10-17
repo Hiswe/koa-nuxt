@@ -106,17 +106,19 @@ async function start() {
 
   router.post(`/flash-message`, async ctx => {
     const id = shortid.generate()
-    ctx.session = {
-      notification: {
-        id,
-        message: `my flash message ${id}`,
-        type: `info`,
-      },
+    console.log(ctx.state.isJson)
+    const notification = {
+      id,
+      message: `my flash message ${id}`,
+      type: `info`,
     }
+    if (ctx.state.isJson) return (ctx.body = notification)
+
+    ctx.session = { notification }
     // persist session with `manuallyCommit`
     // • https://github.com/koajs/session#sessionmanuallycommit
     await ctx.session.manuallyCommit()
-    ctx.redirect(`/info`)
+    ctx.redirect(`/test`)
   })
   router.post(`/will-throw`, async ctx => {
     throw Boom.teapot()

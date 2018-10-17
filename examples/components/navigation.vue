@@ -9,8 +9,8 @@ export default {
     <nuxt-link class="kn-navigation__link" to="/">
       home
     </nuxt-link>
-    <nuxt-link class="kn-navigation__link" to="/info">
-      info
+    <nuxt-link class="kn-navigation__link" to="/test">
+      test
     </nuxt-link>
   </nav>
 </template>
