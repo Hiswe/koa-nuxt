@@ -80,7 +80,7 @@ async function start() {
         override: false,
       })
       ctx.status = boomError.output.statusCode
-
+      // handle XHR
       if (ctx.state.isJson) return (ctx.body = boomError)
       // expose error to nuxt
       // • used by middleware/handle-server-errors
@@ -113,8 +113,9 @@ async function start() {
       message: `my flash message ${id}`,
       type: `info`,
     }
+    // handle XHR
     if (ctx.state.isJson) return (ctx.body = notification)
-
+    // set the flash messages
     ctx.session = { notification }
     // persist session with `manuallyCommit`
     // • https://github.com/koajs/session#sessionmanuallycommit
