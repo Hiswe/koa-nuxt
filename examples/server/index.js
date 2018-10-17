@@ -99,10 +99,11 @@ async function start() {
   const router = new Router()
 
   router.post(`/flash-message`, async ctx => {
+    const id = shortid.generate()
     ctx.session = {
       notification: {
-        id: shortid.generate(),
-        message: `my flash message`,
+        id,
+        message: `my flash message ${id}`,
         type: `info`,
       },
     }
@@ -122,13 +123,28 @@ async function start() {
   //////
 
   app.use(async (ctx, next) => {
-    console.log(ctx.state)
-    console.log(ctx.session)
+    const string = ctx.cookies.get(`kn-example`, { signed: true })
+    // dirty fix for emptying flash messages
+    // delete ctx.session.notification
+    if (string) {
+      const body = new Buffer.from(string, 'base64').toString('utf8')
+      let json
+      try {
+        json = JSON.parse(body)
+      } catch (parseError) {
+        json = {}
+      }
+      delete json.notification
+      const cookieBody = JSON.stringify(json)
+      const encodedCookieBody = new Buffer.from(cookieBody).toString('base64')
+      ctx.cookies.set(`kn-example`, encodedCookieBody, { signed: true })
+    }
+
     // useful for nuxtServerInit
     ctx.req.serverData = {
-      ...ctx.state,
       ...ctx.session,
     }
+
     await next()
   })
 

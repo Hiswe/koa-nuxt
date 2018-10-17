@@ -8,11 +8,11 @@
   },
   "scripts": {
     "start": "npm run build && npm run serve",
-    "serve": "cross-env NODE_ENV=production node build/main.js",
+    "serve": "cross-env NODE_ENV=production DEBUG=koa-session node build/main.js",
     "build": "run-p build:*",
     "build:nuxt": "nuxt build",
     "build:server": "parcel build server/index.js --target node",
-    "dev": "run-p dev:*",
+    "dev": "cross-env DEBUG=koa-session:* run-p dev:*",
     "dev:watch": "parcel watch server/index.js --target node",
     "dev:serve": "nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
