@@ -2,7 +2,6 @@
 .rpt2_cache
 .vscode
 coverage
-example
 src
 test
 .gitignore
