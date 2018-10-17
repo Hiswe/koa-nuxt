@@ -80,6 +80,8 @@ async function start() {
         override: false,
       })
       ctx.status = boomError.output.statusCode
+
+      if (ctx.state.isJson) return (ctx.body = boomError)
       // expose error to nuxt
       // • used by middleware/handle-server-errors
       ctx.req.error = boomError
@@ -106,7 +108,6 @@ async function start() {
 
   router.post(`/flash-message`, async ctx => {
     const id = shortid.generate()
-    console.log(ctx.state.isJson)
     const notification = {
       id,
       message: `my flash message ${id}`,

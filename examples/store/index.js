@@ -1,3 +1,5 @@
+import shortid from 'shortid'
+
 export const state = () => ({
   notifications: [],
 })
@@ -7,9 +9,8 @@ export const REMOVE_NOTIFICATION = `REMOVE_NOTIFICATION`
 
 export const mutations = {
   [ADD_NOTIFICATION](state, payload) {
-    state.notifications.push({
-      ...payload,
-    })
+    payload.id = payload.id || shortid.generate()
+    state.notifications.push(payload)
   },
   [REMOVE_NOTIFICATION](state, id) {
     const notificationIndex = state.notifications.findIndex(

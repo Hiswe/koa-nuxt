@@ -5,9 +5,11 @@ import { ADD_NOTIFICATION } from '~/store'
 
 export default {
   name: `page-test`,
+  head: {
+    title: `test`,
+  },
   methods: {
     addNotification() {
-      console.log(`addNotification`)
       this.$axios
         .post(`/flash-message`, {})
         .then(response => {
@@ -15,8 +17,19 @@ export default {
           this.notify(data)
         })
         .catch(error => {
-          // console.log(error)
+          this.notify({
+            message: `cannot get a new flash message`,
+            type: `error`,
+          })
         })
+    },
+    addError() {
+      this.$axios.post(`/will-throw`, {}).catch(error => {
+        this.notify({
+          message: error.response.statusText,
+          type: `error`,
+        })
+      })
     },
     ...mapMutations({ notify: ADD_NOTIFICATION }),
   },
@@ -32,7 +45,11 @@ export default {
     >
       <button class="kn-button" type="submit">show a flash message</button>
     </form>
-    <form action="/will-throw" method="POST">
+    <form
+      action="/will-throw"
+      method="POST"
+      @submit.prevent="addError"
+    >
       <button class="kn-button" type="submit">throw a server error</button>
     </form>
   </div>

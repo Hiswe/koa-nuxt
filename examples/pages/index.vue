@@ -1,6 +1,9 @@
 <script>
 export default {
   name: `page-index`,
+  head: {
+    title: `welcome`,
+  },
 }
 </script>
 
@@ -12,6 +15,7 @@ export default {
 
 <style scoped>
 .kn-home {
+  margin-top: 1.5rem;
   font-size: 3rem;
   text-align: center;
   color: var(--color-vue);

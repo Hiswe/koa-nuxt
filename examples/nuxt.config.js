@@ -10,6 +10,7 @@ export default {
   build: {},
   axios: {},
   head: {
+    title: `💚`,
     titleTemplate: `Koa Nuxt – %s`,
     meta: [
       { charset: `utf-8` },
